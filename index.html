@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Barışalım mı?</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --primary-color: #5a2a83;
+    --primary-light: #a889d9;
+    --background-gradient: linear-gradient(135deg, #f3e9ff, #e6ddff);
+    --text-color: #2c1a58;
+    --btn-shadow: rgba(90, 42, 131, 0.4);
+  }
+  body {
+    background: var(--background-gradient);
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    text-align: center;
+    padding: 0 20px;
+  }
+  h1 {
+    font-weight: 600;
+    font-size: 2.2rem;
+    margin-bottom: 40px;
+    line-height: 1.3;
+  }
+  .btn-container {
+    position: relative;
+    height: 70px;
+    display: flex;
+    justify-content: flex-start; /* sola yasladım */
+    align-items: center;
+    gap: 20px;
+  }
+  .btn {
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.25rem;
+    padding: 14px 36px;
+    box-shadow: 0 8px 15px var(--btn-shadow);
+    transition: all 0.4s ease;
+    color: white;
+    user-select: none;
+    position: relative;
+    z-index: 2;
+  }
+  .yes {
+    background: linear-gradient(45deg, #6a47d1, #3b1e96);
+    transform: scale(1);
+  }
+  .yes:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 12px 20px rgba(106, 71, 209, 0.7);
+  }
+  .no {
+    background: linear-gradient(45deg, #d14a47, #962c28);
+  }
+  .no:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 12px 20px rgba(209, 74, 71, 0.7);
+  }
+  img {
+    margin-top: 40px;
+    width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(90, 42, 131, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  img:hover {
+    transform: scale(1.07);
+    box-shadow: 0 16px 40px rgba(90, 42, 131, 0.6);
+  }
+  .fullscreen-yes {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 3rem !important;
+    border-radius: 0 !important;
+    z-index: 9999 !important;
+    box-shadow: none !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>Evi temizlemekten yoruldum...<br>Robot süpürge alabilir miyiz?😅</h1>
+<div class="btn-container">
+  <button class="btn yes" id="yesBtn">Evet</button>
+  <button class="btn no" id="noBtn">Hayır</button>
+</div>
+
+<script>
+  let step = 0;
+  const noTexts = [
+    "Hayır",
+    "Emin misin?🥺",
+    "Gerçekten emin misin? 😇",
+    "Bir daha düşün istersen...",
+    "Hayır dersen üzülürüm😔",
+    "Son kararın mı? 🙃",
+    "Artık hayır deme şansın yok 😈"
+  ];
+  
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  let yesScale = 1;
+
+  noBtn.addEventListener("click", () => {
+    if (step < noTexts.length - 1) {
+      step++;
+      noBtn.textContent = noTexts[step];
+
+      if (step === 3) {
+        // 4. tıklamada Hayır'ı Evet'in altına al
+        noBtn.style.position = "absolute";
+        noBtn.style.top = "60px";
+        noBtn.style.left = "0px";
+        noBtn.style.transform = "translate(0, 0)";
+      } else {
+        // Normal hareket
+        const yesRect = yesBtn.getBoundingClientRect();
+        const offsetX = yesRect.width + Math.random() * 50;
+        const offsetY = 0;
+        noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      }
+
+      yesScale *= 1.5;
+      yesBtn.style.transform = `scale(${yesScale})`;
+    }
+    if (step === noTexts.length - 1) {
+      yesBtn.style.transition = "all 0.8s ease";
+      yesBtn.style.position = "fixed";
+      yesBtn.style.top = "0";
+      yesBtn.style.left = "0";
+      yesBtn.style.width = "100%";
+      yesBtn.style.height = "100%";
+      yesBtn.style.fontSize = "48px";
+      yesBtn.style.borderRadius = "0";
+      noBtn.style.display = "none";
+    }
+  });
+
+  yesBtn.addEventListener("click", () => {
+    document.body.innerHTML = "<h1>TEŞEKKÜRLER CANIM KOCAM💖</h1>";
+  });
+</script>
+
+</body>
+</html>
